@@ -1,11 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movimiento")]
     [SerializeField] int velocidadMovimiento;
+    [SerializeField] private float velocidad;
+    [SerializeField] private float factorGravedad;
+
+    [Header("Detección suelo")]
+    [SerializeField] private float radioDeteccion;
+    [SerializeField] private Transform pies;
+    [SerializeField] private LayerMask queEsSuelo;
+
     private CharacterController controller;
+
+    //me sirve tanto para la gravedad como 
+    private Vector3 movimientoVertical;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +30,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         MoveryRotar();
+        AplicarGravedad();
+        EnSuelo();
     }
 
     private void MoveryRotar()
@@ -40,5 +56,18 @@ public class Player : MonoBehaviour
 
 
         }
+       
+    }
+    private void AplicarGravedad()
+    {
+        //Mi velocidadVertical va en aumento a cierto factor por segundo
+        movimientoVertical.y += factorGravedad * Time.deltaTime;
+        controller.Move(movimientoVertical * Time.deltaTime);
+    }
+    private bool EnSuelo()
+    {
+        //Tirar una esfera de detección en los pies con cierto radio.
+        bool resultado= Physics.CheckSphere(pies.position,radioDeteccion,queEsSuelo);
+        return resultado;
     }
 }
