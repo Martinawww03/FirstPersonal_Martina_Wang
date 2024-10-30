@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] int velocidadMovimiento;
     [SerializeField] private float velocidad;
     [SerializeField] private float factorGravedad;
+    [SerializeField] private float alturaSalto;
 
     [Header("Detección suelo")]
     [SerializeField] private float radioDeteccion;
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+
+        //Bloquea el ratón en centro 
+
     }
 
     // Update is called once per frame
@@ -31,7 +35,26 @@ public class Player : MonoBehaviour
     {
         MoveryRotar();
         AplicarGravedad();
-        EnSuelo();
+        
+
+        if (EnSuelo())
+        {
+            //Cada vez que aterricemos, cancelamos la gravedad
+            movimientoVertical.y = 0;
+            Saltar();
+        }
+    }
+
+    private void Saltar()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Aplico "rórmula" de salto, para saltar la cantidad de altura que yo quiera.
+            movimientoVertical.y = Mathf.Sqrt(-2 * factorGravedad * alturaSalto);
+
+        }
+
     }
 
     private void MoveryRotar()
@@ -41,12 +64,15 @@ public class Player : MonoBehaviour
 
         Vector2 input = new Vector2(h, v).normalized;
 
+        //Roto el cuerpo de forma constante con la rotacion "y" de la cámara.
+        transform.rotation= Quaternion.Euler(0,Camera.main.transform.eulerAngles.y,0);
+
         //Si el jugador ha tocado teclas...
         if (input.magnitude > 0)
         {
             //Calculo el angulo al que tengo que rotarme en funcion de los inputs y camara
             float angulo = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
-            transform.eulerAngles = new Vector3(0, angulo, 0);
+            //transform.eulerAngles = new Vector3(0, angulo, 0);
 
             //mi movimiento también ha quedado rotado en base al angulo calculado
             Vector3 movimiento = Quaternion.Euler(0, angulo, 0) * Vector3.forward;
@@ -69,5 +95,12 @@ public class Player : MonoBehaviour
         //Tirar una esfera de detección en los pies con cierto radio.
         bool resultado= Physics.CheckSphere(pies.position,radioDeteccion,queEsSuelo);
         return resultado;
+    }
+
+    //Método que se ejecuta automáticamente para dibujar cualquier figura
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(pies.position, radioDeteccion);
     }
 }
