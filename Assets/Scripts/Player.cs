@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform pies;
     [SerializeField] private LayerMask queEsSuelo;
 
+
+    [SerializeField] private float vidas;
+
     private CharacterController controller;
 
     //me sirve tanto para la gravedad como 
@@ -96,6 +99,12 @@ public class Player : MonoBehaviour
         bool resultado= Physics.CheckSphere(pies.position,radioDeteccion,queEsSuelo);
         return resultado;
     }
+    
+    public void RecibirDanho(float danhoEnemigo)
+    {
+        vidas -= danhoEnemigo;
+    }
+
 
     //Método que se ejecuta automáticamente para dibujar cualquier figura
     private void OnDrawGizmos()
