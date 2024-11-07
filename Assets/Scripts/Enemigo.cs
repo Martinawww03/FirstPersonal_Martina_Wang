@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Video;
 
 public class Enemigo : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private LayerMask queEsDanhable;
     [SerializeField] private float danhoEnemigo;
     private bool puedoDanhar = true;
+    Rigidbody[] huesos; 
+
+    int vidas;
 
 
     //El enemigo tiene que perseguir al player.
@@ -25,8 +29,13 @@ public class Enemigo : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim= GetComponent<Animator>();
-
         player = GameObject.FindObjectOfType<Player>();
+        huesos = GetComponentsInChildren<Rigidbody>(); //si pongo solo "componenT" sin la s, coge solo un childre y da error
+        
+        for (int i = 0; i < huesos.Length; i++)
+        {
+            huesos[i].isKinematic = true;
+        }
     }
 
     // Update is called once per frame
@@ -49,9 +58,10 @@ public class Enemigo : MonoBehaviour
         //Si hemos detectado algo en nuestro "radar" (OverlapSphere)
         if(collsDetectados.Length > 0 )
         {
+            //
           for (int i = 0; i < collsDetectados.Length; i++) //para no hacer la lista de array
             {
-                collsDetectados[i].GetComponent<Player>().RecibirDanho(danhoEnemigo);
+                collsDetectados[i].GetComponent<Player>().RecibirDanho(danhoEnemigo); // [i] es un array 
             }
           puedoDanhar=false;
         }
@@ -74,6 +84,13 @@ public class Enemigo : MonoBehaviour
         anim.SetBool("Attack", false); //Dejo de atacar
         puedoDanhar = false;
     }
+    private void cambiarEstadoHuesos()
+    {
+        for (int i = 0; i < huesos.Length; i++)
+        {
+            huesos[i].isKinematic = true;
+        }
+    }
     private void AbrirVentanaAtaque()
     {
         ventanaAbierta = true;
@@ -82,5 +99,13 @@ public class Enemigo : MonoBehaviour
     private void CerrarVentanaAtaque()
     {
         ventanaAbierta=false;
+    }
+    public void RecibirDanho(float RecibirDanho) //hay solo una parada de entrada, es decir Float, y el nombre puede ser cualquiera
+    {
+        //vidas -= RecibirDanho;
+        if(vidas<=0)
+        {
+            //cambiarEstadoHuesos(false);
+        }
     }
 }

@@ -22,7 +22,13 @@ public class ArmaManual : MonoBehaviour
             system.Play(); //Ejecuto la particula
             if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hitInfo, misDatos.distanciaAtaque))
             {
-                Debug.Log(hitInfo.transform.name); //Muestro el nombre de a quien ha impactado
+               // Debug.Log(hitInfo.transform.name); //Muestro el nombre de a quien ha impactado
+               if(hitInfo.transform.CompareTag("ParteEnemigo")) //Compare es mejor que tag
+                {
+                  hitInfo.transform.GetComponent<Enemigo>().RecibirDanho(misDatos.danhoAtaque);
+
+                }
+
             }
 
         }   
