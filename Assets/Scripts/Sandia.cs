@@ -6,7 +6,10 @@ using UnityEngine;
 public class Sandia : MonoBehaviour
 {
     private Rigidbody rb;
+
+    [Header("Explosion")]
     [SerializeField] private float fuerzaImpulso;
+    [SerializeField] private float fuerzaExplosion;
     [SerializeField] private float radioExplosion;
     [SerializeField] private GameObject explosion;
 

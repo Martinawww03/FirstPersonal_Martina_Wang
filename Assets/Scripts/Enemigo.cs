@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Video;
+using UnityEngine.XR;
 
 public class Enemigo : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Enemigo : MonoBehaviour
     Rigidbody[] huesos; 
 
     int vidas;
+    private Rigidbody rb;
 
 
     //El enemigo tiene que perseguir al player.
@@ -31,6 +33,7 @@ public class Enemigo : MonoBehaviour
         anim= GetComponent<Animator>();
         player = GameObject.FindObjectOfType<Player>();
         huesos = GetComponentsInChildren<Rigidbody>(); //si pongo solo "componenT" sin la s, coge solo un childre y da error
+        
         
         for (int i = 0; i < huesos.Length; i++)
         {
@@ -83,6 +86,8 @@ public class Enemigo : MonoBehaviour
             //Lanzar la animación de ataque 
             agent.isStopped = true; //Me paro
             anim.SetBool("Attack", true); //Lanzo el ataque
+
+            EnfocarObjetivo();
         }
     }
     private void FinAtaque()
@@ -114,5 +119,24 @@ public class Enemigo : MonoBehaviour
         {
             //cambiarEstadoHuesos(false);
         }
+    }
+    public void Explotar()
+    {
+        //Desactivar todo (ani
+        //mainScript.Morir();
+        //rb.AddExplosionForce();
+    }
+    private void EnfocarObjetivo()
+    {
+        //1. Calculo vector UNITARIO que mira hacia el player desde nuestra posición
+        Vector3 direccionAObjetivo = (player.transform.position - transform.position).normalized;
+
+        //1.5 Modifico la y del vector para prevenir que el enemigo se tumbe
+        direccionAObjetivo.y = 0;
+
+        //2. Calculo la rotacion para conseguir dicha direccion
+       // Quaternion.rotacionAObjetivo = Quaternion.LookRotation(direccionAObjetivo);
+
+        // transform.rotation = rotacionAObjetivo;
     }
 }
