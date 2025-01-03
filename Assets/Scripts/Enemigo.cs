@@ -12,16 +12,21 @@ public class Enemigo : MonoBehaviour
     private NavMeshAgent agent;
     private Animator anim;
     private Player player;
+    
     bool ventanaAbierta;
     [SerializeField] private Transform attackPoint;
+    [SerializeField] private Transform attackPoint2;
     [SerializeField] private float radioAtaque;
     [SerializeField] private LayerMask queEsDanhable;
     [SerializeField] private float danhoEnemigo;
+    [SerializeField] private float vida;
     private bool puedoDanhar = true;
     Rigidbody[] huesos; 
 
     int vidas;
     private Rigidbody rb;
+
+    public float Vida { get => vida; set => vida = value; }
 
 
     //El enemigo tiene que perseguir al player.
@@ -32,6 +37,8 @@ public class Enemigo : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim= GetComponent<Animator>();
         player = GameObject.FindObjectOfType<Player>();
+
+
         huesos = GetComponentsInChildren<Rigidbody>(); //si pongo solo "componenT" sin la s, coge solo un childre y da error
         
         
@@ -39,6 +46,7 @@ public class Enemigo : MonoBehaviour
         {
             huesos[i].isKinematic = true;
         }
+        //cambiarEstadoHuesos(true);
     }
 
     // Update is called once per frame
@@ -81,14 +89,16 @@ public class Enemigo : MonoBehaviour
         agent.SetDestination(player.transform.position);
 
         //Si el enemigo está a distancia de ataque de ti 
-        if (agent.pathPending==agent.remainingDistance <= agent.stoppingDistance) //pathPending= mira ver si el agente no tiene calculo pendiente
+        if (!agent.pathPending&&agent.remainingDistance <= agent.stoppingDistance) //pathPending= mira ver si el agente no tiene calculo pendiente
         {
             //Lanzar la animación de ataque 
             agent.isStopped = true; //Me paro
             anim.SetBool("Attack", true); //Lanzo el ataque
+            
 
             EnfocarObjetivo();
         }
+        
     }
     private void FinAtaque()
     {
@@ -137,6 +147,12 @@ public class Enemigo : MonoBehaviour
         //2. Calculo la rotacion para conseguir dicha direccion
        // Quaternion.rotacionAObjetivo = Quaternion.LookRotation(direccionAObjetivo);
 
-        // transform.rotation = rotacionAObjetivo;
+         transform.rotation = Quaternion.LookRotation(direccionAObjetivo);
+    }
+    public void Morir()
+    {
+        agent.enabled = false;
+        anim.enabled = false;
+        //cambiarEstadoHuesos(false);
     }
 }

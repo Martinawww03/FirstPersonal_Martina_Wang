@@ -9,16 +9,18 @@ public class Sandia : MonoBehaviour
 
     [Header("Explosion")]
     [SerializeField] private float fuerzaImpulso;
-    [SerializeField] private float fuerzaExplosion;
+    [SerializeField] private float tiempoVida;
     [SerializeField] private float radioExplosion;
-    [SerializeField] private GameObject explosion;
+    [SerializeField] private LayerMask queEsExplotable;
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private float fuerzaExplosion;
+    [SerializeField] private float rebote;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb= GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * fuerzaImpulso, ForceMode.Impulse);
-        Destroy(gameObject, 1.5f);
+        GetComponent<Rigidbody>().AddForce(transform.forward.normalized * fuerzaImpulso, ForceMode.Impulse);
+        Destroy(gameObject, tiempoVida);
     }
 
     // Update is called once per frame
@@ -30,18 +32,17 @@ public class Sandia : MonoBehaviour
     //Se ejecuta automaticamente cuando esta entidad (sandía) se va a morir
     private void OnDestroy()
     {
-        Instantiate(explosion, transform.position, Quaternion.identity);
-        //if (Physics.OverlapSphereNonAlloc(transform.position, radioExplosion, buffer, queEsplotable) > 0) ;
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Collider[] collsDetectados = Physics.OverlapSphere(transform.position, radioExplosion, queEsExplotable);
+        if(collsDetectados.Length > 0)
+        {
+            foreach(Collider coll in collsDetectados)
+            {
+                coll.GetComponent<ParteDeEnemigo>().Explotar();
+                coll.GetComponent<Rigidbody>().isKinematic = false;
+                coll.GetComponent<Rigidbody>().AddExplosionForce(fuerzaExplosion, transform.position, radioExplosion,rebote,ForceMode.Impulse);
 
-
-        //Si el numero de detecciones es superior a 0....
-        //if(numeroDetectados>0)
-        //{
-              //Recorrer  todos los colliders detectados....
-        //    for(int i = 0; i<numeroDetectados; i++)
-        //    {
-        //        buffer[i].TryGetComponent(out ParteDeEnemigo scriptHueso))
-        //    }
-        //}
+            }
+        }
     }
 }

@@ -6,8 +6,11 @@ public class WeaponChange : MonoBehaviour
 {
     [SerializeField] private GameObject[] armas;
 
+
     //Recoge al indice de arma actual.
-    private int indiceArmaActual; 
+    private int indiceArmaActual = 0;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,13 +26,13 @@ public class WeaponChange : MonoBehaviour
     private void CambiarArmaConRaton()
     {
         float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-        if(scrollWheel >0) //
+        if(scrollWheel >0) 
         {
-
+            CambiarArma(indiceArmaActual - 1);
         }
         else if (scrollWheel <0)
         {
-
+            CambiarArma(indiceArmaActual + 1);
         }
     }
     private void CambiarArmaConTeclado()
