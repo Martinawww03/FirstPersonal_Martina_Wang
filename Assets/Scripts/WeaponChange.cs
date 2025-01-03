@@ -58,12 +58,12 @@ public class WeaponChange : MonoBehaviour
 
     private void CambiarArma(int indiceNuevaArma)
     {
-        //Desactivo el arma actual
-        //armas[indiceArmaAcual].SetActive(false);
+        if(indiceNuevaArma>=0&& indiceNuevaArma<armas.Length)
+        {
+            armas[indiceArmaActual].SetActive(false);
 
-        //Activar la nueva
-        armas[indiceNuevaArma].SetActive(true); //con eso no vale, porque he activado la nueva, pero no he desactivado lo anterior
-
-        //indiceArmaActual == indiceNuevaArma;
+            indiceArmaActual=indiceNuevaArma;
+            armas[indiceArmaActual].SetActive(true);
+        }
     }
 }

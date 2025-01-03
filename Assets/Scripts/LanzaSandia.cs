@@ -18,7 +18,7 @@ public class LanzaSandia : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            system.Play();
+            //system.Play();
             Instantiate(sandiaPrefab,sandiaSpawn.position,sandiaSpawn.rotation);
         }
     }
