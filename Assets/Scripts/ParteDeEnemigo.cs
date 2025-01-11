@@ -13,7 +13,7 @@ public class ParteDeEnemigo : MonoBehaviour
         mainScript.Vida -= dannoRecibido * multiplicadorDanno;
         if (mainScript.Vida <= 0)
         {
-        
+            mainScript.Morir();
         }
     }
 

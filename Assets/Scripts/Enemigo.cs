@@ -124,18 +124,13 @@ public class Enemigo : MonoBehaviour
     }
     public void RecibirDanho(float RecibirDanho) //hay solo una parada de entrada, es decir Float, y el nombre puede ser cualquiera
     {
-        //vidas -= RecibirDanho;
+       // vidas -= RecibirDanho;
         if(vidas<=0)
         {
-            //cambiarEstadoHuesos(false);
+            cambiarEstadoHuesos(false);
         }
     }
-    public void Explotar()
-    {
-        //Desactivar todo (ani
-        //mainScript.Morir();
-        //rb.AddExplosionForce();
-    }
+    
     private void EnfocarObjetivo()
     {
         //1. Calculo vector UNITARIO que mira hacia el player desde nuestra posición
@@ -153,6 +148,14 @@ public class Enemigo : MonoBehaviour
     {
         agent.enabled = false;
         anim.enabled = false;
-        //cambiarEstadoHuesos(false);
+        cambiarEstadoHuesos(false);
+        Destroy(gameObject, 3); //3= Segundos que tarda a desaparecer el enemigo.
+    }
+    private void cambiarEstadoHuesos(bool estado)
+    {
+        for(int i = 0; i<huesos.Length; i++)
+        {
+            huesos[i].isKinematic = estado;
+        }
     }
 }
