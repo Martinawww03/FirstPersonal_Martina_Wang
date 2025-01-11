@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         //Bloquea el ratón en centro 
+        Cursor.lockState = CursorLockMode.Locked;
 
     }
 

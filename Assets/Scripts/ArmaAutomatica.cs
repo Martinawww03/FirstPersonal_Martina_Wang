@@ -6,41 +6,29 @@ public class ArmaAutomatica : MonoBehaviour
 {
     [SerializeField] private ParticleSystem system;
     [SerializeField] private ArmaSO misDatos;
+    private float timer;
     private Camera cam;
 
-    private float timer;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        cam =Camera.main;
-
-        //Me aseguro que el temporizador empiece 
-        //para que podemos disparar desde un principio
-
+        cam = Camera.main;
         timer = misDatos.cadenciaAtaque;
-
-
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         timer += Time.deltaTime;
-
-        //Si mantengo pulsado click izq y el timer supera o iguala cadenciaAtaque...
-        if(Input.GetMouseButtonDown(0)&&timer>=misDatos.cadenciaAtaque)
+        if(Input.GetMouseButton(0)&& timer >= misDatos.cadenciaAtaque)
         {
-
-            //Puedo disparar
-            system.Play(); //Ejecuto sistema de particulas
-            if(Physics.Raycast(cam.transform.position, cam.transform.forward,out RaycastHit hitInfo, misDatos.distanciaAtaque))
+            system.Play();
+            if(Physics.Raycast(cam.transform.position,cam.transform.forward,out RaycastHit hit, misDatos.distanciaAtaque)) //Hace una raya hasta enfrente
             {
-                //if(hitInfo.transform.TryGetComponent(out ParteDeEnemigo scriptEnemigo))
-                //{
-                //    scriptEnemigo.RecibirDanho(misDatos.danhoAtaque);
-                //}
+                system.Play();
+                if(hit.transform.CompareTag("ParteEnemigo"))
+                {
+                    hit.transform.GetComponent<ParteDeEnemigo>().RecibirDanno(misDatos.distanciaAtaque);
+                }
             }
-
+            timer = 0;
         }
     }
 }

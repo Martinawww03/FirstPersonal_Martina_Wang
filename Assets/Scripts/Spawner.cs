@@ -16,6 +16,7 @@ public class Spawner : MonoBehaviour
         while (true)
         {
             Instantiate(enemigoPrefab, puntoSpawn[Random.Range(0, puntoSpawn.Length)].position, Quaternion.identity);
+            yield return new WaitForSeconds(2);
         }
     }
 

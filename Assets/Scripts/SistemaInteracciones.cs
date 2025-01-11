@@ -6,8 +6,10 @@ using UnityEngine;
 public class SistemaInteracciones : MonoBehaviour
 {
     private Camera cam;
-    private Transform interactuableActual;
     [SerializeField] private float distanciaInteraccion;
+
+    private Transform interactuableActual;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,16 +19,29 @@ public class SistemaInteracciones : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    }
-    private void FixedUpdate() //Para aligerar recursos, lo meto en el fixed
-    { 
-        if(Physics.Raycast(cam.transform.position,cam.transform.forward, out RaycastHit hit,distanciaInteraccion))
-    {
-       if(hit.transform.TryGetComponent(out CajaMunicion cajaScript)) 
-       {
-          
-       }
-    }
+        if(Physics.Raycast(cam.transform.position,cam.transform.forward,out RaycastHit hit, distanciaInteraccion))
+        {
+            if(hit.transform.TryGetComponent(out Puerta puerta) )
+            {
+                interactuableActual = hit.transform;
+                interactuableActual.GetComponent<Outline>().enabled = true;
+                if(Input.GetKeyDown(KeyCode.E))
+                {
+                    puerta.Abrir();
+                    Debug.Log("abrir puerta");
+                }
+
+            }
+        }
+    
+        else if(interactuableActual)
+        {
+            //Le apago
+            interactuableActual.GetComponent<Outline>().enabled=false;
+
+            //Lo anulo
+            interactuableActual=null;   
+        }
 
     }
 
