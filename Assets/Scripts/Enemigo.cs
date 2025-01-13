@@ -63,6 +63,7 @@ public class Enemigo : MonoBehaviour
         if(ventanaAbierta && puedoDanhar)
         {
           DetectarImpacto();
+          
 
         }
 
@@ -84,6 +85,7 @@ public class Enemigo : MonoBehaviour
           puedoDanhar=false;
         }
     }
+    
     private void Perseguir()
     {
         agent.SetDestination(player.transform.position);
@@ -127,6 +129,7 @@ public class Enemigo : MonoBehaviour
        // vidas -= RecibirDanho;
         if(vidas<=0)
         {
+            
             cambiarEstadoHuesos(false);
         }
     }
@@ -146,6 +149,7 @@ public class Enemigo : MonoBehaviour
     }
     public void Morir()
     {
+        Debug.Log("sdfdsffff");
         agent.enabled = false;
         anim.enabled = false;
         cambiarEstadoHuesos(false);

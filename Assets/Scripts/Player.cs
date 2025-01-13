@@ -1,7 +1,10 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -17,7 +20,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask queEsSuelo;
 
 
-    [SerializeField] private float vidas;
+    [SerializeField] private float vidas ;
+    [SerializeField] TMP_Text textVidas;
 
     private CharacterController controller;
 
@@ -103,7 +107,9 @@ public class Player : MonoBehaviour
     
     public void RecibirDanho(float danhoEnemigo)
     {
+
         vidas -= danhoEnemigo;
+        textVidas.text = vidas + " /5";
     }
 
 
@@ -112,5 +118,12 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(pies.position, radioDeteccion);
+    }
+    private void GameOver()
+    {
+        if(vidas==0)
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 }
