@@ -20,7 +20,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask queEsSuelo;
 
 
-    [SerializeField] private float vidas ;
+    [SerializeField] private float vidasActuales;
+    [SerializeField] private float vidasMax;
     [SerializeField] TMP_Text textVidas;
 
     private CharacterController controller;
@@ -108,8 +109,14 @@ public class Player : MonoBehaviour
     public void RecibirDanho(float danhoEnemigo)
     {
 
-        vidas -= danhoEnemigo;
-        textVidas.text = vidas + " /5";
+        vidasActuales -= danhoEnemigo;
+        if (vidasActuales <= 0)
+        {
+            Time.timeScale=0; //Para parar el tiempo
+            //MenuGameOver.SetActive(true);
+            Destroy(gameObject);
+        }
+        textVidas.text = vidasActuales + " /5";
     }
 
 
@@ -121,7 +128,7 @@ public class Player : MonoBehaviour
     }
     private void GameOver()
     {
-        if(vidas==0)
+        if(vidasActuales==0)
         {
             SceneManager.LoadScene(3);
         }
