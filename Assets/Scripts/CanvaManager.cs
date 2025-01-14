@@ -8,7 +8,7 @@ public class CanvaManager : MonoBehaviour
     [SerializeField] GameObject menuPausa;
     [SerializeField] GameObject menuGameOver;
     
-    public void Pausa()
+    public void RegresarPartida()
     {
         Time.timeScale = 1.0f;
         menuPausa.SetActive(false);

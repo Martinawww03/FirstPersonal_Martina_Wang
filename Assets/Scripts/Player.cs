@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float vidasActuales;
     [SerializeField] private float vidasMax;
     [SerializeField] TMP_Text textVidas;
+    [SerializeField] private GameObject weaponHolder;
+    [SerializeField] private GameObject menuGameOver;
+    [SerializeField] private GameObject menuPausa;
 
     private CharacterController controller;
 
@@ -92,6 +95,24 @@ public class Player : MonoBehaviour
 
         }
        
+    }
+    private void MenuPausa()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0f;
+            weaponHolder.SetActive(false);
+            menuPausa.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            MoveryRotar();
+            
+        }
+        else
+        {
+            weaponHolder.SetActive(true);
+            Cursor.lockState = CursorLockMode.Locked;
+            MoveryRotar();
+        }
     }
     private void AplicarGravedad()
     {
