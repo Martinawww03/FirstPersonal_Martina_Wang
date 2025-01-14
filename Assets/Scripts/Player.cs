@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     //me sirve tanto para la gravedad como 
     private Vector3 movimientoVertical;
 
+    public float VidasActuales { get => vidasActuales; set => vidasActuales = value; }
+    public float VidasMax { get => vidasMax; set => vidasMax = value; }
 
     private void FixedUpdate()
     {
@@ -143,9 +145,8 @@ public class Player : MonoBehaviour
     
     public void RecibirDanho(float danhoEnemigo)
     {
-
+        textVidas.text = "Vidas: "+vidasActuales + "/"+vidasMax;
         vidasActuales -= danhoEnemigo;
-        textVidas.text = vidasActuales + " / "+vidasMax;
         if (vidasActuales <= 0)
         {
             Time.timeScale=0; //Para parar el tiempo
@@ -162,11 +163,11 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(pies.position, radioDeteccion);
     }
-    private void GameOver()
-    {
-        if(vidasActuales==0)
-        {
-            SceneManager.LoadScene(3);
-        }
-    }
+    //private void GameOver()
+    //{
+    //    if(vidasActuales==0)
+    //    {
+    //        SceneManager.LoadScene(3);
+    //    }
+    //}
 }

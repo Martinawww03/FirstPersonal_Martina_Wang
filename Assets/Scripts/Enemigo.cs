@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Video;
@@ -12,7 +14,11 @@ public class Enemigo : MonoBehaviour
     private NavMeshAgent agent;
     private Animator anim;
     private Player player;
-    
+
+    [SerializeField] TMP_Text enemigoDerrotado;
+    [SerializeField] private int puntoActual;
+    [SerializeField] private int puntosMax;
+
     bool ventanaAbierta;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private Transform attackPoint2;
@@ -37,6 +43,7 @@ public class Enemigo : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim= GetComponent<Animator>();
         player = GameObject.FindObjectOfType<Player>();
+        
 
 
         huesos = GetComponentsInChildren<Rigidbody>(); //si pongo solo "componenT" sin la s, coge solo un childre y da error
@@ -118,7 +125,6 @@ public class Enemigo : MonoBehaviour
     private void AbrirVentanaAtaque()
     {
         ventanaAbierta = true;
-       
     }
     private void CerrarVentanaAtaque()
     {
@@ -129,7 +135,6 @@ public class Enemigo : MonoBehaviour
        // vidas -= RecibirDanho;
         if(vidas<=0)
         {
-            
             cambiarEstadoHuesos(false);
         }
     }
@@ -149,11 +154,13 @@ public class Enemigo : MonoBehaviour
     }
     public void Morir()
     {
-        Debug.Log("sdfdsffff");
         agent.enabled = false;
         anim.enabled = false;
         cambiarEstadoHuesos(false);
         Destroy(gameObject, 3); //3= Segundos que tarda a desaparecer el enemigo.
+
+        puntoActual += 1;
+        enemigoDerrotado.text = "Enemigo derrotado: " + puntoActual + "/" + puntosMax;
     }
     private void cambiarEstadoHuesos(bool estado)
     {

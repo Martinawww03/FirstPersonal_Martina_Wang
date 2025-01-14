@@ -2682,7 +2682,7 @@ MonoBehaviour:
   queEsDanhable:
     serializedVersion: 2
     m_Bits: 64
-  danhoEnemigo: 2
+  danhoEnemigo: 1
   vida: 10
 --- !u!195 &1301945656866837686
 NavMeshAgent:
