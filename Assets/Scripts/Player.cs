@@ -27,10 +27,18 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject menuGameOver;
     [SerializeField] private GameObject menuPausa;
 
+    private Camera cam;
+
     private CharacterController controller;
 
     //me sirve tanto para la gravedad como 
     private Vector3 movimientoVertical;
+
+
+    private void FixedUpdate()
+    {
+        MenuPausa();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +47,8 @@ public class Player : MonoBehaviour
 
         //Bloquea el ratón en centro 
         Cursor.lockState = CursorLockMode.Locked;
+        cam = Camera.main;
+        
 
     }
 
@@ -47,7 +57,9 @@ public class Player : MonoBehaviour
     {
         MoveryRotar();
         AplicarGravedad();
-        
+     
+
+
 
         if (EnSuelo())
         {
@@ -100,12 +112,14 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Time.timeScale = 0f;
-            weaponHolder.SetActive(false);
-            menuPausa.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
+           
+            weaponHolder.SetActive(false);
+            menuPausa.SetActive(true);
+           
             MoveryRotar();
-            
+            Time.timeScale = 0f;
+
         }
         else
         {
@@ -131,13 +145,14 @@ public class Player : MonoBehaviour
     {
 
         vidasActuales -= danhoEnemigo;
+        textVidas.text = vidasActuales + " / "+vidasMax;
         if (vidasActuales <= 0)
         {
             Time.timeScale=0; //Para parar el tiempo
-            //MenuGameOver.SetActive(true);
+            menuGameOver.SetActive(true);
             Destroy(gameObject);
         }
-        textVidas.text = vidasActuales + " /5";
+        
     }
 
 
