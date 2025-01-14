@@ -61,8 +61,7 @@ public class Enemigo : MonoBehaviour
     {
         if(agent.enabled)
         {
-         Perseguir();
-
+            Perseguir();
         }
 
 
@@ -70,8 +69,6 @@ public class Enemigo : MonoBehaviour
         if(ventanaAbierta && puedoDanhar)
         {
           DetectarImpacto();
-          
-
         }
 
 
