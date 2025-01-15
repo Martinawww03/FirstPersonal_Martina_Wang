@@ -21,8 +21,11 @@ public class Player : MonoBehaviour
 
 
     [SerializeField] private float vidasActuales;
-    [SerializeField] private float vidasMax;
-    [SerializeField] TMP_Text textVidas;
+    //[SerializeField] private float vidasMax;
+    //[SerializeField] TMP_Text textVidas;
+    [SerializeField] private int puntosComida;
+    [SerializeField] TMP_Text textPuntuacion;
+
     [SerializeField] private GameObject weaponHolder;
     [SerializeField] private GameObject menuGameOver;
     [SerializeField] private GameObject menuPausa;
@@ -34,8 +37,10 @@ public class Player : MonoBehaviour
     //me sirve tanto para la gravedad como 
     private Vector3 movimientoVertical;
 
-    public float VidasActuales { get => vidasActuales; set => vidasActuales = value; }
-    public float VidasMax { get => vidasMax; set => vidasMax = value; }
+    public int PuntosComida { get => puntosComida; set => puntosComida = value; }
+
+    //public float VidasActuales { get => vidasActuales; set => vidasActuales = value; }
+    //public float VidasMax { get => vidasMax; set => vidasMax = value; }
 
     private void FixedUpdate()
     {
@@ -142,16 +147,41 @@ public class Player : MonoBehaviour
         bool resultado= Physics.CheckSphere(pies.position,radioDeteccion,queEsSuelo);
         return resultado;
     }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Coleccionable"))
+        {
+            puntosComida += 1;
+            textPuntuacion.text = "POINT: " + puntosComida;
+            Destroy(other.gameObject);
+
+            if (puntosComida >= 5)
+            {
+                // Mostrar el menú de Game Over
+                menuGameOver.SetActive(true);
+
+                // Pausar el juego (opcional)
+                Time.timeScale = 0f; // Detener el tiempo del juego
+            }
+        }
+
     
+    }
+
+
     public void RecibirDanho(float danhoEnemigo)
     {
-        textVidas.text = "Vidas: "+vidasActuales + "/"+vidasMax;
+        //textVidas.text = "Vidas: "+vidasActuales + "/"+vidasMax;
         vidasActuales -= danhoEnemigo;
         if (vidasActuales <= 0)
         {
-            Time.timeScale=0; //Para parar el tiempo
+            Cursor.lockState = CursorLockMode.None;
+            //Time.timeScale=0; //Para parar el tiempo
             menuGameOver.SetActive(true);
+            Time.timeScale = 0f;
             Destroy(gameObject);
+           
+
         }
         
     }

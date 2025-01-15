@@ -8,13 +8,19 @@ public class CanvaManager : MonoBehaviour
 {
     [SerializeField] GameObject menuPausa;
     [SerializeField] GameObject menuGameOver;
-    [SerializeField] TMP_Text puntos;
-    [SerializeField] TMP_Text vidasTexto;
+    [SerializeField] TMP_Text textPuntuacion;
+    [SerializeField] Player player;
+
+    //[SerializeField] TMP_Text vidasTexto;
     float vidas;
     float vidasMaxima;
-
+    int puntossComida;
+    private void Update()
+    {
+        puntossComida = player.PuntosComida;
+    }
     //public GameObject MenuGameOver { get => menuGameOver; set => menuGameOver = value; }
-
+   
     public void RegresarPartida()
     {
         Time.timeScale = 1.0f;
@@ -29,9 +35,9 @@ public class CanvaManager : MonoBehaviour
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
     }
-    private void Update()
-    {
-        vidas=GameObject.FindObjectOfType<Player>().VidasActuales; //Busca el primer gameobject de tipo player.
-        vidasMaxima= GameObject.FindObjectOfType<Player>().VidasMax; //
-    }
+    //private void Update()
+    //{
+    //    vidas=GameObject.FindObjectOfType<Player>().VidasActuales; //Busca el primer gameobject de tipo player.
+    //    vidasMaxima= GameObject.FindObjectOfType<Player>().VidasMax; //
+    //}
 }

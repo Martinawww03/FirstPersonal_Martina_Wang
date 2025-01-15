@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Contador : MonoBehaviour
 {
@@ -55,11 +56,12 @@ public class Contador : MonoBehaviour
         textSegundos.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    void OnTimerEnd()
+    public void OnTimerEnd()
     {
         Time.timeScale = 0f;
         // Mostrar el Canvas de Game Over
         menuGameOver.SetActive(true);
         
+
     }
 }
