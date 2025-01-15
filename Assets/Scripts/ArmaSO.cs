@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ArmaSO : MonoBehaviour
+[CreateAssetMenu(menuName ="Arma2")]
+public class ArmaSO : ScriptableObject
 {
     public int balasCargador;
     public int balasBolsa;
