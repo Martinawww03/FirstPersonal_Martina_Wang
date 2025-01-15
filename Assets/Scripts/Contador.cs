@@ -13,44 +13,44 @@ public class Contador : MonoBehaviour
 
     void Start()
     {
-        if (textSegundos == null || menuGameOver == null)
-        {
-            Debug.LogError("No se asignaron todos los elementos necesarios en el Inspector.");
-            return;
-        }
+        //if (textSegundos == null || menuGameOver == null)
+        //{
+        //    Debug.LogError("Ndhuasoid");
+        //    return;
+        //}
 
         // Asegurarse de que el Canvas de Game Over esté oculto al inicio
         menuGameOver.SetActive(false);
 
         // Iniciar el temporizador
         timerIsRunning = true;
-        UpdateTimerDisplay();
+        ContadorTiempo();
     }
 
     void Update()
     {
         if (timerIsRunning)
         {
-            if (segundosTotal > 0)
+            if (segundosTotal > 0) //Comprueba si quedan segundos en el temporizador.
             {
                 // Reducir el tiempo restante
-                segundosTotal -= Time.deltaTime;
-                UpdateTimerDisplay();
+                segundosTotal -= Time.deltaTime; //Si quedan segundos, reduce el tiempo restante.
+                ContadorTiempo();
             }
             else
             {
                 // El temporizador ha terminado
                 segundosTotal = 0;
                 timerIsRunning = false;
-                UpdateTimerDisplay();
+                ContadorTiempo();
                 OnTimerEnd();
             }
         }
     }
 
-    void UpdateTimerDisplay()
+    void ContadorTiempo()
     {
-        // Actualiza el texto del temporizador en formato mm:ss
+        // cambiarlo a minutos y segundos 
         int minutes = Mathf.FloorToInt(segundosTotal / 60);
         int seconds = Mathf.FloorToInt(segundosTotal % 60);
         textSegundos.text = string.Format("{0:00}:{1:00}", minutes, seconds);

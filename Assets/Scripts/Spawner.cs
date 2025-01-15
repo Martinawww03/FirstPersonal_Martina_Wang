@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] puntoSpawn;
-    [SerializeField] private Enemigo enemigoPrefab;
+    [SerializeField] private Transform[] puntoSpawn; //Array
+    [SerializeField] private Enemigo enemigoPrefab; 
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemigos());
+        StartCoroutine(SpawnEnemigos()); //espaunea cada 2 segundos en posiciones aleatoria.
     }
-    IEnumerator SpawnEnemigos()
+    IEnumerator SpawnEnemigos() //Corrutina
     {
         while (true)
         {

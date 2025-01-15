@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Colecionable : MonoBehaviour
 {
-    //[SerializeField] private AudioClip sonidoClip;
-    //[SerializeField] private AudioManager miManager;
+    [SerializeField] private AudioClip sonidoClip;
+    [SerializeField] private AudioManager miManager;
 
     // Start is called before the first frame update
     void Start()
@@ -18,12 +18,12 @@ public class Colecionable : MonoBehaviour
     {
         transform.Rotate(new Vector3(-40, 30, 0) * Time.deltaTime);
     }
-   // private void OnTriggerEnter(Collider other)
-   // {
-   //     if (other.gameObject.CompareTag("Player"))
-   //     {
-   //         Destroy(other.gameObject);
-   //         //miManager.ReproducirSonido(sonidoClip);
-   //     }
-   // }
+   private void OnTriggerEnter(Collider other)
+   {
+       if (other.gameObject.CompareTag("Player"))
+       {
+           Destroy(other.gameObject);
+           miManager.ReproducirSonido(sonidoClip);
+       }
+   }
 }
