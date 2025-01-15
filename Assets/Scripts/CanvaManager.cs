@@ -13,6 +13,8 @@ public class CanvaManager : MonoBehaviour
     float vidas;
     float vidasMaxima;
 
+    //public GameObject MenuGameOver { get => menuGameOver; set => menuGameOver = value; }
+
     public void RegresarPartida()
     {
         Time.timeScale = 1.0f;

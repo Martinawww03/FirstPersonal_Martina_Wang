@@ -29,6 +29,8 @@ public class Enemigo : MonoBehaviour
     private bool puedoDanhar = true;
     Rigidbody[] huesos; 
 
+
+
     int vidas;
     private Rigidbody rb;
 

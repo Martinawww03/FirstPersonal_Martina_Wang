@@ -2676,6 +2676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f6848d4f6729e468781d5cfc8f9616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemigoDerrotado: {fileID: 0}
+  puntoActual: 0
+  puntosMax: 0
   attackPoint: {fileID: 4845037521927894913}
   attackPoint2: {fileID: 1333678303295770615}
   radioAtaque: 0.5
