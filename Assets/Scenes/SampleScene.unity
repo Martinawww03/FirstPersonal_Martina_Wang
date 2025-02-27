@@ -924,7 +924,12 @@ MonoBehaviour:
   queEsSuelo:
     serializedVersion: 2
     m_Bits: 8
-  vidas: 0
+  vidasActuales: 0
+  puntosComida: 0
+  textPuntuacion: {fileID: 0}
+  weaponHolder: {fileID: 0}
+  menuGameOver: {fileID: 0}
+  menuPausa: {fileID: 0}
 --- !u!54 &453890905
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8676,14 +8681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9099eca701e3a5743b80180e97317eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puntoSpawn: []
   enemigoPrefab: {fileID: 0}
-  puntosSpawn: []
-  numeroNiveles: 0
-  rondasporNivel: 0
-  spwansPorRonda: 0
-  esperaEntreSpawns: 0
-  esperaEntreRondas: 0
-  esperaEntreNiveles: 0
 --- !u!4 &1747265918
 Transform:
   m_ObjectHideFlags: 0
